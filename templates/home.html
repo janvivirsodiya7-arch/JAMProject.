@@ -1,0 +1,366 @@
+{% extends "website/base.html" %}
+{% load static %}
+
+{% block extra_css %}
+{% endblock %}
+
+
+
+{% block content %}
+
+  <!-- WHITE NAVBAR -->
+  <nav class="navbar">
+    <a href="#" class="logo">Doctor<span>App</span></a>
+    <ul class="nav-links">
+    {% if request.user.is_authenticated %}
+      <li><a href="#">Doctors</a></li>
+      <li><a href="#">Patients</a></li>
+    {% else %}
+      <li><a href="{% url 'core:register' 'doctor' %}">Doctors</a></li>
+      <li><a href="{% url 'core:register' 'patient' %}">Patients</a></li>
+    {% endif %}
+      <li><a href="#">Healthcare</a></li>
+      <li><a href="#">Treatment</a></li>
+    </ul>
+    {% if request.user.is_authenticated %}
+    <a href="/dashboard/" class="nav-cta">Dashboard</a>
+    {% else %}
+    <a href="login" class="nav-cta">Login</a>
+    {% endif %}
+</nav>
+
+  <!-- LARGE DARK BLUE JUMBOTRON -->
+  <section class="jumbotron">
+    <div class="badge-row">
+      <span><span class="dot green"></span> 1000 Patients</span>
+      <span><span class="dot blue"></span> 10 Doctors</span>
+      <span><span class="dot amber"></span> 100 Treated</span>
+    </div>
+
+    <h1>
+      Doctor App for <span class="highlight-blue">Clinical records</span><br>
+       <span class="highlight-green"> of Patients</span>
+    </h1>
+
+    <p>
+      Doctor App is a digital platform that converts patient data into personalized, 
+      multi-channel healthcare care experiences that improve health.
+    </p>
+    {% if request.user.is_authenticated %}
+    <a href="{% url 'appointment:appointment_create' %}" class="btn-primary">Book Appointment</a>
+    {% else %}
+    <a href="{% url 'core:register' 'patient' %}" class="btn-primary">Register</a>
+    {% endif %}
+  </section>
+
+ 
+
+<div class="container py-5">
+    <div class="section-header">
+      <h2>Doctor Portfolios</h2>
+      <p>From rich medical experience to a conforting patients healthcare and well being.</p>
+    </div>
+
+    <div class="row g-4">
+
+        <!-- Doctor 1 -->
+        <div class="col-12 col-md-6 col-lg-4 doctor-col">
+            <div class="card doctor-card h-100 shadow-sm">
+                <div class="card-body p-0">
+
+                    <!-- Profile -->
+                    <div class="d-flex align-items-center mb-3">
+
+                        <img
+                            src="{% static 'images/sarah.jpg' %}"
+                            class="doctor-profile-img me-3"
+                            alt="Dr. Sarah Johnson"
+                        >
+
+                        <div>
+                            <div class="doctor-name">
+                                Dr. Sarah Johnson
+                            </div>
+
+                            <small class="text-muted">
+                                Cardiologist
+                            </small>
+                        </div>
+
+                    </div>
+
+                    <!-- Qualification -->
+                    <div class="doctor-qualification">
+                        MBBS, MD (Cardiology)
+                    </div>
+
+                    <!-- Description -->
+                    <p class="doctor-description mb-0">
+                        Dr. Sarah Johnson is an experienced cardiologist
+                        specializing in preventive cardiology, heart disease
+                        management, hypertension and comprehensive cardiac care.
+                        She focuses on providing personalized treatment plans
+                        for every patient.
+                    </p>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Doctor 2 -->
+        <div class="col-12 col-md-6 col-lg-4 doctor-col">
+            <div class="card doctor-card h-100 shadow-sm">
+                <div class="card-body p-0">
+
+                    <div class="d-flex align-items-center mb-3">
+
+                        <img
+                            src="{% static 'images/rahul.jpg' %}"
+                            class="doctor-profile-img me-3"
+                            alt="Dr. Rahul Patel"
+                        >
+
+                        <div>
+                            <div class="doctor-name">
+                                Dr. Rahul Patel
+                            </div>
+
+                            <small class="text-muted">
+                                Neurologist
+                            </small>
+                        </div>
+
+                    </div>
+
+                    <div class="doctor-qualification">
+                        MBBS, MD, DM (Neurology)
+                    </div>
+
+                    <p class="doctor-description mb-0">
+                        Dr. Rahul Patel specializes in the diagnosis and
+                        treatment of neurological disorders, including migraine,
+                        epilepsy, stroke and movement disorders. He has extensive
+                        clinical experience in neurological care.
+                    </p>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Doctor 3 -->
+        <div class="col-12 col-md-6 col-lg-4 doctor-col">
+            <div class="card doctor-card h-100 shadow-sm">
+                <div class="card-body p-0">
+
+                    <div class="d-flex align-items-center mb-3">
+
+                        <img
+                            src="{% static 'images/lucy.jpg' %}"
+                            class="doctor-profile-img me-3"
+                            alt="Dr. Lucy Lui"
+                        >
+
+                        <div>
+                            <div class="doctor-name">
+                                Dr. Lucy Lui
+                            </div>
+
+                            <small class="text-muted">
+                                Pediatrician
+                            </small>
+                        </div>
+
+                    </div>
+
+                    <div class="doctor-qualification">
+                        MBBS, MD (Pediatrics)
+                    </div>
+
+                    <p class="doctor-description mb-0">
+                        Dr. Lucy Lui provides comprehensive pediatric
+                        healthcare for infants, children and adolescents.
+                        Her approach emphasizes preventive care, childhood
+                        development and family education.
+                    </p>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Doctor 4 -->
+        <div class="col-12 col-md-6 col-lg-4 doctor-col">
+            <div class="card doctor-card h-100 shadow-sm">
+                <div class="card-body p-0">
+
+                    <div class="d-flex align-items-center mb-3">
+
+                        <img
+                            src="{% static 'images/xiang.jpg' %}"
+                            class="doctor-profile-img me-3"
+                            alt="Dr. Xiang Xi"
+                        >
+
+                        <div>
+                            <div class="doctor-name">
+                                Dr. Xiang Xi
+                            </div>
+
+                            <small class="text-muted">
+                                Orthopedic Surgeon
+                            </small>
+                        </div>
+
+                    </div>
+
+                    <div class="doctor-qualification">
+                        MBBS, MS (Orthopedics)
+                    </div>
+
+                    <p class="doctor-description mb-0">
+                        Dr. Xiang Xi specializes in orthopedic surgery,
+                        joint replacement, sports injuries and musculoskeletal
+                        conditions. He is committed to helping patients return
+                        to an active and healthy lifestyle.
+                    </p>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Doctor 5 -->
+        <div class="col-12 col-md-6 col-lg-4 doctor-col">
+            <div class="card doctor-card h-100 shadow-sm">
+                <div class="card-body p-0">
+
+                    <div class="d-flex align-items-center mb-3">
+
+                        <img
+                            src="{% static 'images/olivia.jpg' %}"
+                            class="doctor-profile-img me-3"
+                            alt="Dr. Olivia Brown"
+                        >
+
+                        <div>
+                            <div class="doctor-name">
+                                Dr. Olivia Brown
+                            </div>
+
+                            <small class="text-muted">
+                                Dermatologist
+                            </small>
+                        </div>
+
+                    </div>
+
+                    <div class="doctor-qualification">
+                        MBBS, MD (Dermatology)
+                    </div>
+
+                    <p class="doctor-description mb-0">
+                        Dr. Olivia Brown provides expert dermatological care
+                        covering acne, pigmentation, hair loss, skin allergies
+                        and other medical and cosmetic skin conditions.
+                    </p>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Doctor 6 -->
+        <div class="col-12 col-md-6 col-lg-4 doctor-col">
+            <div class="card doctor-card h-100 shadow-sm">
+                <div class="card-body p-0">
+
+                    <div class="d-flex align-items-center mb-3">
+
+                        <img
+                            src="{% static 'images/daniel.jpg' %}"
+                            class="doctor-profile-img me-3"
+                            alt="Dr. Daniel Wilson"
+                        >
+
+                        <div>
+                            <div class="doctor-name">
+                                Dr. Daniel Wilson
+                            </div>
+
+                            <small class="text-muted">
+                                General Physician
+                            </small>
+                        </div>
+
+                    </div>
+
+                    <div class="doctor-qualification">
+                        MBBS, MD (Internal Medicine)
+                    </div>
+
+                    <p class="doctor-description mb-0">
+                        Dr. Daniel Wilson is a general physician with experience
+                        in adult medicine, preventive healthcare, diabetes,
+                        hypertension and the management of common acute and
+                        chronic medical conditions.
+                    </p>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+  <!-- LARGE DARK BLUE FOOTER -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <a href="#" class="logo">Doctor<span>App</span></a>
+        <p>Digital clinical records of patients healthcare</p>
+        <p>At Railway Station, Kosamba.</p>
+        <p>Phone: +91 9900990099</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="#">Platform Overview</a></li>
+          <li><a href="#">Care Journeys</a></li>
+          <li><a href="#">Integrations</a></li>
+          <li><a href="#">Security</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="{% url 'core:register' 'doctor' %}">Doctor</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#">Planning</a></li>
+          <li><a href="#">Reference</a></li>
+          <li><a href="#">Case Studies</a></li>
+          <li><a href="#">Support</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 Prodoc AI. All rights reserved.</span>
+      <span>Privacy Policy · Terms of Service</span>
+    </div>
+  </footer>
+
+{% endblock %}

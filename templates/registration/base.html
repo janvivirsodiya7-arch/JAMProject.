@@ -1,0 +1,69 @@
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}E-Store{% endblock %}</title>
+
+    <!-- Bootstrap CSS CDN -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+
+    <!-- LOCAL BOOTSTRAP 5 CSS -->
+    <link href="{% static 'assets/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="{% static 'assets/bootstrap-icons.min.css' %}" rel="stylesheet">
+    
+    
+    <!-- SHARED THEME CSS -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+    {% block extra_css %}
+    {% endblock %}
+</head>
+
+<body>
+
+    <!-- Django messages -->
+    <div class="container">
+        {% if messages %}
+            {% for message in messages %}
+                <div
+                    class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show"
+                    role="alert"
+                >
+                    {{ message }}
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                    ></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <!-- Main content -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- jQuery + Bootstrap JS CDN -->
+    <!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> -->
+
+    <!-- LOCAL JQUERY -->
+    <script src="{% static 'assets/jquery-4.0.0.min.js' %}"></script>
+    <!-- LOCAL BOOTSTRAP 5 JS BUNDLE -->
+    <script src="{% static 'assets/bootstrap.bundle.min.js' %}"></script>
+
+    {% block extra_js %}{% endblock %}
+
+</body>
+</html>

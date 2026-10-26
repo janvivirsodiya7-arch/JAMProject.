@@ -1,0 +1,159 @@
+{% extends "dashboard/base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h3 mb-0">Appointments</h1>
+  <a href="{% url 'appointment:appointment_create' %}" class="btn btn-primary">
+    <i class="bi bi-plus-lg"></i> Create
+  </a>
+</div>
+
+
+
+<!-- Filter -->
+<div class="container-fluid mb-4">
+  <div class="card">
+      <!-- Filter Header -->
+      <div
+          class="card-header bg-secondary text-white d-flex justify-content-between align-items-center"
+          data-bs-toggle="collapse"
+          data-bs-target="#filterSection"
+          aria-expanded="false"
+          aria-controls="filterSection"
+          style="cursor: pointer;"
+      >
+          <span>Filter</span>
+          <span>▼</span>
+      </div>
+
+      <!-- Filter Section -->
+      <div id="filterSection" class="collapse">
+          <div class="card-body">
+              <form method="get">
+                  <div class="row">
+                      {% for field in filter.form %}
+                          <div class="col-md-3 mb-3">
+                              {{ field.label_tag }}
+                              {{ field }}
+
+                              {% if field.errors %}
+                                  <div class="text-danger">
+                                      {{ field.errors }}
+                                  </div>
+                              {% endif %}
+                          </div>
+                      {% endfor %}
+                  </div>
+
+                  <button type="submit" class="btn btn-primary">
+                      Filter
+                  </button>
+
+                  <a
+                      href="{% url 'appointment:appointment_list' %}"
+                      class="btn btn-secondary"
+                  >
+                      Clear
+                  </a>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- Table -->
+<div class="card">
+  <div class="table-responsive">
+    <table class="table table-hover table-striped mb-0">
+      <thead class="table-dark">
+        <tr>
+          <th>App ID</th>
+          <th>Patient</th>
+          <th>Doctor</th>
+          <th>Date/Time</th>
+          <th>Status</th>
+          <th class="text-end">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for a in appointments %}
+        <tr>
+          <td><a href="{% url 'appointment:appointment_detail' a.pk %}">{{ a.appointment_id }}</a></td>
+          <td>
+              {{ a.patient.user.first_name }} {{ a.patient.user.last_name }}
+          </td>
+          <td>
+              {{ a.doctor.user.first_name }} {{ a.doctor.user.last_name }}
+          </td>
+          <td>{{ a.date|date:"d/m/Y" }} | {{a.time|time:"H:i"}}</td>
+          <td>
+              <span class="badge
+                  {% if a.status == 'booked' %}
+                      bg-info
+                  {% elif a.status == 'attended' %}
+                      bg-success
+                  {% elif a.status == 'cancelled' %}
+                      bg-danger
+                  {% elif a.status == 'missed' %}
+                      bg-secondary
+                  {% elif a.status == 'today' %}
+                      bg-warning
+                  {% endif %}
+              ">
+                  {{ a.get_status_display }}
+              </span>
+          </td>
+
+          
+          <td class="text-end text-nowrap">
+            <a href="{% url 'appointment:appointment_detail' a.pk %}" class="btn btn-sm btn-outline-secondary" title="View">
+              <i class="bi bi-eye"></i>
+            </a>
+            <a href="{% url 'appointment:appointment_update' a.pk %}"
+   class="btn btn-sm btn-outline-primary"
+   title="Treat">
+    <i class="bi bi-pencil"></i>
+</a>
+            <a href="{% url 'appointment:appointment_delete' a.pk %}" class="btn btn-sm btn-outline-danger" title="Delete">
+              <i class="bi bi-trash"></i>
+            </a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="5" class="text-center text-muted py-4">No appointment yet.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- Paginator -->
+{% if page_obj.has_previous %}
+    <a
+        href="?{{ query_params }}&page={{ page_obj.previous_page_number }}"
+        class="btn btn-outline-secondary"
+    >
+        Previous
+    </a>
+{% endif %}
+
+<span>
+    Page {{ page_obj.number }}
+    of {{ page_obj.paginator.num_pages }}
+</span>
+
+{% if page_obj.has_next %}
+    <a
+        href="?{{ query_params }}&page={{ page_obj.next_page_number }}"
+        class="btn btn-outline-secondary"
+    >
+        Next
+    </a>
+{% endif %}
+
+{% endblock %}
+
+

@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Dashboard{% endblock %}</title>
+
+  <!-- Bootstrap CSS CDN -->
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+  
+  <!-- LOCAL BOOTSTRAP 5 CSS -->
+  <link href="{% static 'assets/bootstrap.min.css' %}" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link href="{% static 'assets/bootstrap-icons.min.css' %}" rel="stylesheet">
+  
+  
+  <!-- SHARED THEME CSS -->
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+
+  {% block extra_css %}{% endblock %}
+
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'core:dashboard' %}">Dashboard</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMain">
+        {% if request.user.is_superuser or request.user.user_type == "nurse" or request.user.user_type == "receptionist" %}
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link" href="{% url 'patient:patient_list' %}">Patients</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'doctor:doctor_list' %}">Doctors</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'appointment:appointment_list' %}">Appointments</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'appointment:treatment_list' %}">Treatments</a></li>
+        </ul>
+        {% elif request.user.user_type == "doctor"%}
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link" href="{% url 'patient:patient_list' %}">Patients</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'appointment:appointment_list' %}">Appointments</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'appointment:treatment_list' %}">Treatments</a></li>
+        </ul>
+        {% elif request.user.user_type == "patient"%}
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link" href="{% url 'appointment:appointment_list' %}">Appointments</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'appointment:treatment_list' %}">Treatments</a></li>
+        </ul>
+        {% endif %}
+
+        <ul class="navbar-nav">
+          <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+          <li class="nav-item"><button class="btn btn-warning"><i class="bi bi-power"></i> {{request.user}}</button></li>
+          </form>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container mb-5">
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+  </main>
+
+
+  <!-- jQuery + Bootstrap JS CDN -->
+  <!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> -->
+
+  <!-- LOCAL JQUERY -->
+  <script src="{% static 'assets/jquery-4.0.0.min.js' %}"></script>
+  <!-- LOCAL BOOTSTRAP 5 JS BUNDLE -->
+  <script src="{% static 'assets/bootstrap.bundle.min.js' %}"></script>
+
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

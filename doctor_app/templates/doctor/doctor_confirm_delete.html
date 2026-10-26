@@ -1,0 +1,32 @@
+```html
+{% extends "dashboard/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-danger text-white">
+            <h4>Delete Doctor</h4>
+        </div>
+
+        <div class="card-body">
+            <p>Are you sure you want to delete this doctor?</p>
+
+            <p><strong>Doctor:</strong> {{ doctor }}</p>
+
+            <form method="post">
+                {% csrf_token %}
+
+                <button type="submit" class="btn btn-danger">
+                    Yes, Delete
+                </button>
+
+                <a href="{% url 'doctor:doctor_list' %}"
+                   class="btn btn-secondary">
+                    Cancel
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+```

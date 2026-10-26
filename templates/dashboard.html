@@ -1,0 +1,47 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+
+{% block content %}
+
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+
+        <!-- Patients -->
+        <div class="col-md-4 mb-4">
+            <a href="#" class="dashboard-card patients">
+                <i class="bi bi-people-fill"></i>
+                <h3>Patients</h3>
+                <p>Manage patient information</p>
+            </a>
+        </div>
+
+        <!-- Doctors -->
+        <div class="col-md-4 mb-4">
+            <a href="#" class="dashboard-card doctors">
+                <i class="bi bi-person-badge-fill"></i>
+                <h3>Doctors</h3>
+                <p>Manage doctors and profiles</p>
+            </a>
+        </div>
+
+        <!-- Appointments -->
+        <div class="col-md-4 mb-4">
+            <a href="{% url 'appointment:appointment_list' %}" class="dashboard-card appointments">
+                <i class="bi bi-calendar-check-fill"></i>
+                <h3>Appointments</h3>
+                <p>Schedule and manage appointments</p>
+            </a>
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}
+
+
+
+

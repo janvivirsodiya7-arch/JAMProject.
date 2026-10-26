@@ -1,0 +1,139 @@
+{% extends "dashboard/base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h3 mb-0">{{ doctor.title }}</h1>
+  <div>
+    <a href="{% url 'doctor:doctor_update' doctor.pk %}" class="btn btn-primary">
+      <i class="bi bi-pencil"></i> Edit
+    </a>
+    <a href="{% url 'doctor:doctor_delete' doctor.pk %}" class="btn btn-outline-danger">
+      <i class="bi bi-trash"></i> Delete
+    </a>
+    <a href="{% url 'doctor:doctor_list' %}" class="btn btn-outline-secondary">Back</a>
+  </div>
+</div>
+
+
+
+<div class="card">
+  <div class="card-header">
+    <h5 class="mb-0">Doctor Details</h5>
+  </div>
+
+  <div class="card-body">
+
+    <!-- Personal Information -->
+    <h6 class="border-bottom pb-2 mb-3">Personal Information</h6>
+
+    <dl class="row mb-4">
+      <dt class="col-sm-3">Doctor ID :</dt>
+      <dd class="col-sm-9">
+        {{ doctor.doctor_id|default:"-" }}
+      </dd>
+
+      <dt class="col-sm-3">Name:</dt>
+      <dd class="col-sm-9">
+        Dr. {{ doctor.user.first_name }} {{ doctor.user.last_name }}
+      </dd>
+
+      <dt class="col-sm-3">User Type:</dt>
+      <dd class="col-sm-9">
+        {{ doctor.user.get_user_type_display }}
+      </dd>
+
+      <dt class="col-sm-3">Email:</dt>
+      <dd class="col-sm-9">
+        {{ doctor.user.email|default:"-" }}
+      </dd>
+
+      <dt class="col-sm-3">Date of Birth:</dt>
+      <dd class="col-sm-9">
+        {{ doctor.user.dob|date:"d M Y"|default:"-" }}
+      </dd>
+
+      <dt class="col-sm-3">Gender:</dt>
+      <dd class="col-sm-9">
+        {{ doctor.user.get_gender_display|default:"-" }}
+      </dd>
+    </dl>
+
+
+    <!-- Contact Information -->
+    <h6 class="border-bottom pb-2 mb-3">Contact Information</h6>
+
+    <dl class="row mb-4">
+      <dt class="col-sm-3">Mobile:</dt>
+      <dd class="col-sm-9">
+        {{ doctor.user.mobile|default:"-" }}
+      </dd>
+
+      <dt class="col-sm-3">Street:</dt>
+      <dd class="col-sm-9">
+        {{ doctor.user.street|default:"-" }}
+      </dd>
+
+      <dt class="col-sm-3">Address:</dt>
+      <dd class="col-sm-9">
+        {{ doctor.user.address|default:"-"|linebreaksbr }}
+      </dd>
+
+      <dt class="col-sm-3">City:</dt>
+      <dd class="col-sm-9">
+        {{ doctor.user.city|default:"-" }}
+      </dd>
+
+      <dt class="col-sm-3">Country:</dt>
+      <dd class="col-sm-9">
+        {{ doctor.user.country|default:"-" }}
+      </dd>
+
+      <dt class="col-sm-3">Postcode:</dt>
+      <dd class="col-sm-9">
+        {{ doctor.user.postcode|default:"-" }}
+      </dd>
+    </dl>
+
+
+    <!-- Professional Information -->
+    <h6 class="border-bottom pb-2 mb-3">Professional Information</h6>
+
+    <dl class="row mb-0">
+
+      <dt class="col-sm-3">Qualification:</dt>
+      <dd class="col-sm-9">
+        {{ doctor.qualification|default:"-" }}
+      </dd>
+
+      <dt class="col-sm-3">Specialist:</dt>
+      <dd class="col-sm-9">
+        {{ doctor.get_specialist_display|default:"-" }}
+      </dd>
+
+      <dt class="col-sm-3">Experience:</dt>
+      <dd class="col-sm-9">
+        {% if doctor.experience %}
+          {{ doctor.experience }} year{{ doctor.experience|pluralize }}
+        {% else %}
+          -
+        {% endif %}
+      </dd>
+
+      <dt class="col-sm-3">Bio:</dt>
+      <dd class="col-sm-9">
+        {% if doctor.bio %}
+          {{ doctor.bio|linebreaksbr }}
+        {% else %}
+          -
+        {% endif %}
+      </dd>
+
+    </dl>
+
+
+  </div>
+</div>
+
+
+
+{% endblock %}
