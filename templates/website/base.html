@@ -1,55 +1,77 @@
+
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}DoctorApp{% endblock %}{% block page_title %}{% endblock %}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Bootstrap CSS CDN -->
-  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <title>{% block title %}DoctorApp{% endblock %}{% block page_title %}{% endblock %}</title>
 
-  <!-- LOCAL BOOTSTRAP 5 CSS -->
-  <link href="{% static 'assets/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link rel="stylesheet"
+          href="{% static 'assets/bootstrap.min.css' %}">
 
-  <!-- Bootstrap Icons -->
-  <link href="{% static 'assets/bootstrap-icons.min.css' %}" rel="stylesheet">
-  
-  
-  <!-- SHARED THEME CSS -->
-  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+          href="{% static 'assets/bootstrap-icons.min.css' %}">
 
-  <!-- Page-specific styles block -->
-  {% block extra_css %}{% endblock %}
+    <!-- Main Shared CSS -->
+    <link rel="stylesheet"
+          href="{% static 'css/styles.css' %}">
+
+    <!-- Additional CSS for individual pages -->
+    {% block extra_css %}{% endblock %}
+
+    <!-- Extra CSS block if required -->
+    {% block custom_css %}{% endblock %}
+
 </head>
+
 <body>
 
-  <!-- MAIN CONTENT CONTAINER -->
-  <main style="padding: 20px 0;">
-    {% if messages %}
-      {% for message in messages %}
-        <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show" role="alert">
-          {{ message }}
-          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-      {% endfor %}
-    {% endif %}
+    <!-- Main Content -->
+    <main style="padding: 20px 0;">
 
-    {% block content %}
-    {% endblock %}
-  </main>
+        <!-- Django Messages -->
+        {% if messages %}
+            <div class="container">
 
-  <!-- jQuery + Bootstrap JS CDN -->
-  <!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> -->
-  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> -->
+                {% for message in messages %}
 
-  <!-- LOCAL JQUERY -->
-  <script src="{% static 'assets/jquery-4.0.0.min.js' %}"></script>
-  
-  <!-- LOCAL BOOTSTRAP 5 JS BUNDLE -->
-  <script src="{% static 'assets/bootstrap.bundle.min.js' %}"></script>
+                    <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show"
+                         role="alert">
 
-  <!-- Page-specific scripts block -->
-  {% block extra_js %}{% endblock %}
+                        {{ message }}
+
+                        <button type="button"
+                                class="btn-close"
+                                data-bs-dismiss="alert"
+                                aria-label="Close">
+                        </button>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+        {% endif %}
+
+        <!-- Page Content -->
+        {% block content %}
+        {% endblock %}
+
+    </main>
+
+    <!-- jQuery -->
+    <script src="{% static 'assets/jquery-4.0.0.min.js' %}"></script>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="{% static 'assets/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Page-specific JavaScript -->
+    {% block extra_js %}{% endblock %}
+
 </body>
 </html>
